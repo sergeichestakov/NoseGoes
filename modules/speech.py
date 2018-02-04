@@ -42,7 +42,7 @@ from six.moves import queue
 # Audio recording parameters
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./nosegoes.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.abspath("./assets/nosegoes.json")
 
 
 class MicrophoneStream(object):
