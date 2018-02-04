@@ -36,7 +36,8 @@ def run(camera, browser, current_time):
         try:
             rect = tracker.faceDetect(frame)[0]
             gestureEngine.updateGesture(frame, rect)
-        except Exception:
+        except Exception as e:
+            print(e)
             print("face not in frame")
 
         cv2.imshow('frame', frame)

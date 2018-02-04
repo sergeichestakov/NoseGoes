@@ -15,10 +15,10 @@ class Box:
         self.topRight = Vertex(x + w/2, y - h/2)
         self.bottomLeft = Vertex(x - w/2, y + h/2)
         self.bottomRight = Vertex(x + w/2, y + h/2)
-    
+
     def contains(self, point):
         return point.x > self.topLeft.x and point.x < self.topRight.x and point.y > self.topLeft.y and point.y < self.bottomLeft.y
-    
+
     def right(self, point):
         return point.x < self.topLeft.x #and point.y < self.topLeft.y and point.y > self.bottomLeft.y
     def left(self, point):
@@ -52,7 +52,9 @@ currentTime = time.time()
 
 def drawDebugUI(image, x, y, w, h):
     cv2.circle(image, center=(x, y), radius=2, color=(255,0,0))
-    cv2.rectangle(image, (x - w / 2, y - h / 2), (x + w / 2, y + h / 2), color=(0,255,0), thickness=2)
+    topLeft = Vertex(x - w / 2, y - h / 2)
+    bottomRight = Vertex(x + w / 2, y + h / 2)
+    cv2.rectangle(image, (topLeft.x, topLeft.y), (bottomRight.x, bottomRight.y), color=(0,255,0), thickness=2)
 
 def setBox(x, y, w, h):
     global thresholdBox, currentTime
@@ -112,7 +114,7 @@ def updateSmoothers(center, width, height):
         smoothH = height
     else:
         smoothH = int(smoothVar["h"].smooth(height))
-    
+
     return (smoothX, smoothY, smoothW, smoothH)
 
 def updateGesture(image, face):
