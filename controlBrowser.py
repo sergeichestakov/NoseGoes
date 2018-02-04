@@ -8,7 +8,7 @@ class Browser:
     default_site = "https://stackoverflow.com/"
     def __init__(self):
         self.browser = webdriver.Firefox()
-        self.browser.get(Browser.default_site)
+        self.browser.execute_script("window.location.href = '" + self.default_site + "'")
         self.populate()
 
     def populate(self):
@@ -16,7 +16,7 @@ class Browser:
         main_window = self.browser.current_window_handle
 
         #Open new tabs
-        for tab in range(3):
+        for tab in range(4):
             sleep(1)
             self.browser.execute_script(javascript)
         #Switch back to original tab
@@ -48,8 +48,8 @@ class Browser:
 
     def getScroll(self, direction):
         return {
-            'up': 1000,
-            'down': -1000
+            'up': -1000,
+            'down': 1000
         }[direction]
 
     #Scrolls up and down the page: direction should be 'up' or 'down'

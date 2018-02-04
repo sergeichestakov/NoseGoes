@@ -35,7 +35,13 @@ def run(camera, browser, current_time):
         #rect = annotations.bounding_poly.vertices
         try:
             rect = tracker.faceDetect(frame)[0]
-            gestureEngine.updateGesture(frame, rect)
+            gesture = gestureEngine.updateGesture(frame, rect)
+            if gesture is not "":
+                if gesture is "left" or gesture is "right":
+                    browser.switchTabs(gesture)
+                elif gesture is "up" or gesture is "down":
+                    browser.scroll(gesture)
+                #time.sleep(2)
         except Exception as e:
             print(e)
             print("face not in frame")
@@ -52,12 +58,12 @@ def close(camera):
 
 def main():
     #open browser
-    #browser = Browser()
+    browser = Browser()
     current_time = time.time()
     camera = cv2.VideoCapture(0)
     initPan, initTilt = initFrame(camera)
 
-    run(camera, None, current_time)
+    run(camera, browser, current_time)
 
     close(camera)
 
