@@ -63,7 +63,7 @@ def drawDebugUI(image, x, y, w, h):
 
 def setBox(x, y, w, h):
     global thresholdBox, currentTime
-    thresholdBox = Box(x, y, int(w / DOWN_SCALE), int(h / DOWN_SCALE / 1.1))
+    thresholdBox = Box(x, y, int(w / DOWN_SCALE * 1.2), int(h / DOWN_SCALE / 1.1))
     currentTime = time.time()
 
 def updateThreshold(image, x, y, w, h):
@@ -130,9 +130,9 @@ def processAsyncGesture(answer):
     (pan, tilt) = answer.result()
     future = None
     retGesture = "none"
-    if pan < -15:
+    if pan < -10:
         retGesture = "right"
-    elif pan > 15:
+    elif pan > 10:
         retGesture = "left"
     elif tilt > 3:
         retGesture = "up"
@@ -142,7 +142,7 @@ def processAsyncGesture(answer):
 def updateGesture(image, face):
     # face format is [topLeft, topRight, bottomRight, bottomLeft]
     # each face is a Vertex with properties x and y
-    global executor, future, retGesture, currentTime
+    global executor, future, retGesture, currentTime, thresholdBox
     delta = time.time() - currentTime
     center = ((face[0].x + face[2].x) / 2, (face[0].y + face[2].y) / 2)
     width = face[2].x - face[0].x
