@@ -8,6 +8,7 @@ class Browser:
     default_site = "https://en.wikipedia.org/wiki/Main_Page"
     def __init__(self):
         self.browser = webdriver.Firefox()
+        self.browser.maximize_window()
         self.populate()
 
     def populate(self):
