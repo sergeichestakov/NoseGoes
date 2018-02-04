@@ -3,3 +3,5 @@
 *.pyc
 *.jpg
 geckodriver.log
+dist/*
+build/*
