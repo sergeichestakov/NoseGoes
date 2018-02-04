@@ -4,21 +4,22 @@ from time import sleep
 
 class Browser:
 
-    new_tab = "https://developer.mozilla.org/en-US/"
-    default_site = "https://stackoverflow.com/"
+    new_tabs = ["https://developer.mozilla.org/en-US/", "https://stackoverflow.com/", "https://www.reddit.com/", "https://news.ycombinator.com/"]
+    default_site = "https://en.wikipedia.org/wiki/Main_Page"
     def __init__(self):
         self.browser = webdriver.Firefox()
-        self.browser.execute_script("window.location.href = '" + self.default_site + "'")
         self.populate()
 
     def populate(self):
-        javascript = "window.open('" + Browser.new_tab + "');"
         main_window = self.browser.current_window_handle
+        self.browser.execute_script("window.location.href = '" + self.default_site + "'")
 
         #Open new tabs
-        for tab in range(4):
-            sleep(1)
+        for tab in Browser.new_tabs:
+            javascript = "window.open('" + tab + "');"
             self.browser.execute_script(javascript)
+            sleep(0.2)
+
         #Switch back to original tab
         self.browser.switch_to_window(main_window)
 
