@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 import google_cloud_platform_query as gc_query
 import opencvTracking as tracker
+import gestureEngine
 
 current_time = time.time()
 
@@ -27,8 +28,9 @@ while(True):
     try:
         rect = tracker.faceDetect(gray)[0]
         print(rect[0].x)
-        cv2.rectangle(gray, (int(rect[0].x), int(rect[0].y)), (int(rect[2].x), int(rect[2].y)), color=(0,255,0), thickness=2)
+        gestureEngine.updateGesture(gray, rect)
     except Exception, e:
+        print(e)
         print("face not in frame")
 
     cv2.imshow('frame', gray)
