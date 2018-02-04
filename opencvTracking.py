@@ -2,8 +2,8 @@ import cv2
 faceCascade = cv2.CascadeClassifier("./faceCascade.xml")
 class Vertex:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = int(x)
+        self.y = int(y)
 
 def expand(face):
     x = face[0]
