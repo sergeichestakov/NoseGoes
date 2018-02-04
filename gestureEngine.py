@@ -39,6 +39,7 @@ def drawDebugUI(image, x, y, w, h):
 
 def updateThreshold(x, y, w, h):
     pass
+    
 def updateSmoothers(center, width, height):
     if "x" not in smoothVar:
         smoothVar["x"] = MovingAverageSmoother(3)

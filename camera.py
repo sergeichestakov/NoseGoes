@@ -27,10 +27,8 @@ while(True):
     # rect = annotations.bounding_poly.vertices
     try:
         rect = tracker.faceDetect(gray)[0]
-        print(rect[0].x)
         gestureEngine.updateGesture(gray, rect)
-    except Exception, e:
-        print(e)
+    except Exception:
         print("face not in frame")
 
     cv2.imshow('frame', gray)
