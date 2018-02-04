@@ -1,6 +1,5 @@
 *.env*
 *.env
 *.pyc
+*.jpg
 geckodriver.log
-videoframe.jpg
-initialFrame.jpg
