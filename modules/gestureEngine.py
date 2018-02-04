@@ -63,7 +63,7 @@ def drawDebugUI(image, x, y, w, h):
 
 def setBox(x, y, w, h):
     global thresholdBox, currentTime
-    thresholdBox = Box(x, y, int(w / DOWN_SCALE), int(h / DOWN_SCALE / 1.1))
+    thresholdBox = Box(x, y, int(w / DOWN_SCALE * 1.4), int(h / DOWN_SCALE / 1.1))
     currentTime = time.time()
 
 def updateThreshold(image, x, y, w, h):
