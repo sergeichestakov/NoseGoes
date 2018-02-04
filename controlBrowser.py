@@ -22,9 +22,17 @@ class Browser:
         #Switch back to original tab
         self.browser.switch_to_window(main_window)
 
+    def switchTabs(self):
+        handles = self.browser.window_handles
+        #Loop through the tabs
+        for handle in handles:
+            sleep(1)
+            self.browser.switch_to_window(handle)
+
     def scroll(self):
         javascript = "window.scrollBy(0, 500);"
 
+        #Scroll for days
         for down in range(15):
             sleep(1)
             self.browser.execute_script(javascript)
@@ -38,5 +46,6 @@ class Browser:
 
 if __name__ == "__main__":
     browser = Browser()
-    browser.scroll()
+    #browser.scroll()
+    browser.switchTabs()
     browser.close()
