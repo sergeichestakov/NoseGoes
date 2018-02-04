@@ -23,9 +23,8 @@ def run(camera, browser, current_time):
 
         # Display the resulting frame
         cv2.imwrite("./assets/videoframe.jpg", frame)
-        #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
-        #rect = annotations.bounding_poly.vertices
 
+        #Detect the face and look for changes in gestures
         try:
             rect = tracker.faceDetect(frame)
             direction = updateGesture(frame, rect)
@@ -41,11 +40,9 @@ def run(camera, browser, current_time):
                 prevDirection = direction
 
         except Exception as e:
-            print('ERROR:')
-            print(e)
+            print('ERROR:', e)
 
         cv2.imshow('frame', frame)
-        #print ("fps: " + str(1/delta))
 
         #Quit with 'q'
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -60,9 +57,8 @@ def main():
     #open browser
     browser = Browser()
 
-    current_time = time.time()
     camera = cv2.VideoCapture(0)
-    initPan, initTilt = initFrame(camera)
+    initPan, initTilt = initFrame(camera, time.time())
     modules.speech.main()
     run(camera, browser, current_time)
 
