@@ -74,19 +74,19 @@ def updateThreshold(image, x, y, w, h):
         if not thresholdBox.contains(point):
             if thresholdBox.left(point):
                 currentTime = time.time()
-                print("looking left")
+                #print("looking left")
                 ret = "left"
             elif thresholdBox.right(point):
                 currentTime = time.time()
-                print("looking right")
+                #print("looking right")
                 ret = "right"
             elif thresholdBox.top(point):
                 currentTime = time.time()
-                print("looking down")
+                #print("looking down")
                 ret = "down"
             elif thresholdBox.bottom(point):
                 currentTime = time.time()
-                print("looking up")
+                #print("looking up")
                 ret = "up"
         else:
             if delta > RESET_TIME:
