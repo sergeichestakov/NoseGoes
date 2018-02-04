@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="voicecommandSet_en-us">
+    <CommandPrefix>Excuse me</CommandPrefix>
+    <Example>Help me browse the web</Example>
+
+    <Command Name="Run">
+      <Example>Run Script</Example>
+      <ListenFor>[Would] [Can] [you] [please] help me browse [the] web [please]</ListenFor>
+      <Feedback>Opening browser</Feedback>
+      <Navigate />
+    </Command>
+
+
+  </CommandSet>
+</VoiceCommands>
