@@ -51,6 +51,10 @@ def processSpeech(browser, stream, client, streaming_config):
                         browser.back()
                     elif "forward" in transcript:
                         browser.forward()
+                elif "search" in transcript:
+                    words = transcript.lstrip().split(' ')
+                    query = (' ').join(words.remove("search"))
+                    browser.search(query)
     except Exception as e:
         print(e)
     processSpeech(browser, stream, client, streaming_config)
