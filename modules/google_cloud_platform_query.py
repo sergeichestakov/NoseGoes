@@ -1,11 +1,8 @@
 import io
 import os
-
 import google.cloud.vision
 
-img_name = "myface.jpg"
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./nosegoes.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./assets/nosegoes.json"
 
 vision_client = google.cloud.vision.ImageAnnotatorClient()
 

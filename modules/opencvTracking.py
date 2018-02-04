@@ -1,5 +1,5 @@
 import cv2
-faceCascade = cv2.CascadeClassifier("./faceCascade.xml")
+faceCascade = cv2.CascadeClassifier("./assets/faceCascade.xml")
 class Vertex:
     def __init__(self, x, y):
         self.x = int(x)

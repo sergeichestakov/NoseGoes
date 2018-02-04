@@ -1,8 +1,8 @@
 import cv2
 from collections import deque
 import time
-from opencvTracking import Vertex
-from google_cloud_platform_query import getAnnotations
+from modules.opencvTracking import Vertex
+from modules.google_cloud_platform_query import getAnnotations
 from concurrent.futures import ThreadPoolExecutor
 
 RESET_TIME = 1.5
@@ -151,9 +151,9 @@ def updateGesture(image, face):
     retDirection = ""
     direction = updateThreshold(image, x, y, w, h)
     if direction is not "":
-        cv2.imwrite("videocapture.jpg", image)
+        cv2.imwrite("./assets/videocapture.jpg", image)
         if future is None:
-            future = executor.submit(getAnnotations, "videocapture.jpg")
+            future = executor.submit(getAnnotations, "./assets/videocapture.jpg")
             future.add_done_callback(processAsyncGesture)
     if retGesture is not "":
         retDirection = retGesture
