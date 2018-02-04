@@ -3,10 +3,11 @@ from collections import deque
 import time
 from opencvTracking import Vertex
 from google_cloud_platform_query import getAnnotations
-import asyncio
+from concurrent.futures import ThreadPoolExecutor
 
 RESET_TIME = 1.5
 DOWN_SCALE = 4
+executor = ThreadPoolExecutor(max_workers=1)
 
 class Box:
     def __init__(self, x, y, w, h):
@@ -51,6 +52,8 @@ class MovingAverageSmoother:
 smoothVar = {}
 thresholdBox = None
 currentTime = time.time()
+future = None
+retGesture = ""
 
 def drawDebugUI(image, x, y, w, h):
     cv2.circle(image, center=(x, y), radius=2, color=(255,0,0))
@@ -122,9 +125,25 @@ def updateSmoothers(center, width, height):
 
     return (smoothX, smoothY, smoothW, smoothH)
 
+def processAsyncGesture(answer):
+    global future, retGesture
+    (pan, tilt) = answer.result()
+    print(pan)
+    print(tilt)
+    future = None
+    if pan < -10:
+        retGesture = "left"
+    elif pan > 10:
+        retGesture = "right"
+    elif tilt > 10:
+        retGesture = "up"
+    elif tilt < -10:
+        retGesture = "down"
+
 def updateGesture(image, face):
     # face format is [topLeft, topRight, bottomRight, bottomLeft]
     # each face is a Vertex with properties x and y
+    global executor, future, retGesture
     center = ((face[0].x + face[2].x) / 2, (face[0].y + face[2].y) / 2)
     width = face[2].x - face[0].x
     height = face[2].y - face[0].y
@@ -133,16 +152,11 @@ def updateGesture(image, face):
     direction = updateThreshold(image, x, y, w, h)
     if direction is not "":
         cv2.imwrite("videocapture.jpg", image)
-        (pan, tilt) = getAnnotations("videocapture.jpg")
-        print(pan)
-        print(tilt)
-        if direction is "left" and pan < -10:
-            retDirection = direction
-        elif direction is "right" and pan > 10:
-            retDirection = direction
-        elif direction is "up" and tilt > 10:
-            retDirection = direction
-        elif direction is "down" and tilt < -10:
-            retDirection = direction
+        if future is None:
+            future = executor.submit(getAnnotations, "videocapture.jpg")
+            future.add_done_callback(processAsyncGesture)
+    if retGesture is not "":
+        retDirection = retGesture
+        retGesture = ""
     drawDebugUI(image, x, y, w, h)
     return retDirection
