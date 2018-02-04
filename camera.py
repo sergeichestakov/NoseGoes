@@ -28,7 +28,8 @@ while(True):
     try:
         rect = tracker.faceDetect(gray)[0]
         gestureEngine.updateGesture(gray, rect)
-    except Exception:
+    except Exception,e:
+        print e
         print("face not in frame")
 
     cv2.imshow('frame', gray)
