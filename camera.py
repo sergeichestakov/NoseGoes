@@ -7,15 +7,24 @@ import numpy as np
 import google_cloud_platform_query as gc_query
 import opencvTracking as tracker
 import gestureEngine
+from controlBrowser import Browser
+
+#open browser
+#browser = Browser()
 
 current_time = time.time()
 
 cap = cv2.VideoCapture(0)
 
+initPan = None
+
 #Compare subsequent calculations against the first frame captured
-ret, initFrame = cap.read()
-cv2.imwrite("initialFrame.jpg", initFrame)
-initPan, initTilt = gc_query.getAnnotations("initialFrame.jpg")
+#Make sure first frame is valid
+while not initPan:
+    ret, initFrame = cap.read()
+    cv2.imwrite("initialFrame.jpg", initFrame)
+    initPan, initTilt = gc_query.getAnnotations("initialFrame.jpg")
+    print(initPan)
 
 while(True):
     # Capture frame-by-frame

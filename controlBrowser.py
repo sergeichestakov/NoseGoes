@@ -64,7 +64,10 @@ class Browser:
         self.browser.close()
         self.browser.quit()
 
-if __name__ == "__main__":
+def main():
     browser = Browser()
     browser.run()
     browser.close()
+
+if __name__ == "__main__":
+    main()
