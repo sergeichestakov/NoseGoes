@@ -28,8 +28,8 @@ while(True):
     #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
     #rect = annotations.bounding_poly.vertices
     try:
-        rect = tracker.faceDetect(gray)[0]
-        gestureEngine.updateGesture(gray, rect)
+        rect = tracker.faceDetect(frame)[0]
+        gestureEngine.updateGesture(frame, rect)
     except Exception:
         print("face not in frame")
 
