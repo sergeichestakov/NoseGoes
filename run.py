@@ -19,8 +19,6 @@ def run(camera, browser, current_time):
         # capture frame-by-frame
         ret, frame = camera.read()
         delta = time.time() - current_time
-        current_time = time.time()
-
         # Display the resulting frame
         cv2.imwrite("./assets/videoframe.jpg", frame)
 
@@ -29,12 +27,17 @@ def run(camera, browser, current_time):
             rect = tracker.faceDetect(frame)
             direction = updateGesture(frame, rect)
 
+            if prevDirection is "up" or prevDirection is "down":
+                if delta > 0.5:
+                    browser.scroll(prevDirection)
+                    current_time = time.time()
             #Determine browser action based on gesture
             if direction is not prevDirection and direction is not "":
                 if direction in horizontal:
                     browser.switchTabs(direction)
                 elif direction in vertical:
                     browser.scroll(direction)
+                    current_time = time.time()
 
             if direction is not "":
                 prevDirection = direction

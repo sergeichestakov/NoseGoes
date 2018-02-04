@@ -56,8 +56,8 @@ class Browser:
 
     def getScrollKey(self, direction):
         return {
-            'up': Keys.PAGE_UP,
-            'down': Keys.PAGE_DOWN
+            'up': Keys.ARROW_UP,
+            'down': Keys.ARROW_DOWN
         }[direction]
     #Scrolls up and down the page: direction should be 'up' or 'down'
     def scroll(self, direction):
