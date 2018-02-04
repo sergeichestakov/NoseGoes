@@ -3,10 +3,10 @@ import datetime
 import time
 import cv2
 import numpy as np
-import google_cloud_platform_query as gc_query
-import opencvTracking as tracker
-import gestureEngine
-from controlBrowser import Browser
+import modules.google_cloud_platform_query as gc_query
+import modules.opencvTracking as tracker
+from modules.gestureEngine import updateGesture 
+from modules.controlBrowser import Browser
 
 #Validates the initial frame and returns original pan and tilt positions
 def initFrame(camera):
@@ -15,8 +15,8 @@ def initFrame(camera):
     #Make sure first frame is valid
     while not initPan:
         ret, initFrame = camera.read()
-        cv2.imwrite("initialFrame.jpg", initFrame)
-        initPan, initTilt = gc_query.getAnnotations("initialFrame.jpg")
+        cv2.imwrite("./assets/initialFrame.jpg", initFrame)
+        initPan, initTilt = gc_query.getAnnotations("./assets/initialFrame.jpg")
 
     return (initPan, initTilt)
 
@@ -33,13 +33,13 @@ def run(camera, browser, current_time):
         current_time = time.time()
 
         # Display the resulting frame
-        cv2.imwrite("videoframe.jpg", frame)
+        cv2.imwrite("./assets/videoframe.jpg", frame)
         #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
         #rect = annotations.bounding_poly.vertices
 
         try:
             rect = tracker.faceDetect(frame)
-            direction = gestureEngine.updateGesture(frame, rect)
+            direction = updateGesture(frame, rect)
 
             #Determine browser action based on gesture
             if direction is not prevDirection:
