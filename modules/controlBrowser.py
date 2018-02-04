@@ -70,6 +70,7 @@ class Browser:
         }[direction]
 
     def getWebsite(self, name):
+        return "https://"+name+".com/"
         if name is "facebook":
             return "https://facebook.com"
         if name is "reddit":
