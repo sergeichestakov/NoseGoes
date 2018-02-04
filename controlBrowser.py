@@ -23,22 +23,38 @@ class Browser:
         self.browser.switch_to_window(main_window)
 
     def run(self):
-        #Scroll up and down just for funsies
         while(True):
-            self.scroll()
             sleep(2)
-            self.scroll(False)
+            self.switchTabs('right')
             sleep(2)
+            self.switchTabs('left')
 
-    def switchTabs(self):
-        handles = self.browser.window_handles
-        #Loop through the tabs
-        for handle in handles:
-            sleep(1)
-            self.browser.switch_to_window(handle)
+    #Switch tabs left and right: direction should be 'left' or 'right'
+    def switchTabs(self, direction):
+        tabs = self.browser.window_handles
+        currTab = self.browser.current_window_handle
+        currIndex = tabs.index(currTab)
 
-    def scroll(self, down=True):
-        scrollValue = 1000 if down else -1000
+        newIndex = self.getNewIndex(currIndex, direction)
+
+        self.browser.switch_to_window(tabs[newIndex])
+
+    def getNewIndex(self, currIndex, direction):
+        length = len(self.browser.window_handles)
+        if(direction == 'left'):
+            return currIndex - 1 if currIndex > 0 else length - 1
+        elif(direction == 'right'):
+            return currIndex + 1 if currIndex < length - 1 else 0
+
+    def getScroll(self, direction):
+        return {
+            'up': 1000,
+            'down': -1000
+        }[direction]
+
+    #Scrolls up and down the page: direction should be 'up' or 'down'
+    def scroll(self, direction):
+        scrollValue = self.getScroll(direction)
         javascript = "window.scrollBy(0," + str(scrollValue) + ");"
 
         self.browser.execute_script(javascript)
