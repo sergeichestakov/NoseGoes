@@ -14,5 +14,5 @@ def getCoordinatesOfFace(image):
         content = upload_file.read()
     googleImage = google.cloud.vision.types.Image(content=content)
     response = vision_client.face_detection(image=googleImage)
-
-    print ("Response: " + str(response))
+    print ("Response: " + str(response.face_annotations))
+    return response.face_annotations
