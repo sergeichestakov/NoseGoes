@@ -7,7 +7,7 @@ import modules.google_cloud_platform_query as gc_query
 import modules.opencvTracking as tracker
 from modules.gestureEngine import updateGesture 
 from modules.controlBrowser import Browser
-import modules.speech
+# import modules.speech
 
 #Validates the initial frame and returns original pan and tilt positions
 def initFrame(camera):
@@ -75,7 +75,7 @@ def main():
     current_time = time.time()
     camera = cv2.VideoCapture(0)
     initPan, initTilt = initFrame(camera)
-
+    modules.speech.main()
     run(camera, browser, current_time)
 
     close(camera, browser)
