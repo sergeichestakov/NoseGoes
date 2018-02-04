@@ -1,6 +1,5 @@
 import argparse
 import datetime
-import imutils
 import time
 import cv2
 import numpy as np
@@ -24,7 +23,7 @@ def initFrame(camera):
 #Constant stream of video with browser actions and API calls based on gestures
 def run(camera, browser, current_time):
     while(True):
-        # camerature frame-by-frame
+        # capture frame-by-frame
         ret, frame = camera.read()
         delta = time.time() - current_time
         current_time = time.time()
@@ -34,14 +33,16 @@ def run(camera, browser, current_time):
         #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
         #rect = annotations.bounding_poly.vertices
         try:
-            rect = tracker.faceDetect(frame)[0]
+            rect = tracker.faceDetect(frame)
             gestureEngine.updateGesture(frame, rect)
         except Exception as e:
             print(e)
             print("face not in frame")
 
         cv2.imshow('frame', frame)
-        print ("fps: " + str(1/delta))
+        #print ("fps: " + str(1/delta))
+
+        #Quit with 'q'
         if cv2.waitKey(1) & 0xFF == ord('q'):
             return
 

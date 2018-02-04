@@ -24,4 +24,4 @@ def faceDetect(imageData):
         if face[2] * face[3] > biggest[2] * biggest[3]:
             biggest = face
     ret = [expand(biggest)]
-    return ret
+    return ret[0]

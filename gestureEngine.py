@@ -67,6 +67,8 @@ def updateThreshold(image, x, y, w, h):
     ret = ""
     if thresholdBox is not None:
         point = Vertex(x,y)
+
+        #Point left the box: save direction and wait til it reenters
         if not thresholdBox.contains(point):
             if thresholdBox.left(point):
                 currentTime = time.time()
