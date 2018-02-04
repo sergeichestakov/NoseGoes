@@ -59,7 +59,7 @@ def main():
 
     camera = cv2.VideoCapture(0)
     #modules.speech.main()
-    run(camera, browser, current_time)
+    run(camera, browser, time.time())
 
     close(camera, browser)
 
