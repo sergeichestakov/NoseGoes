@@ -15,5 +15,10 @@ def getAnnotations(image):
     googleImage = google.cloud.vision.types.Image(content=content)
     response = vision_client.face_detection(image=googleImage)
 
-    print ("Response: " + str(response.face_annotations))
-    return response.face_annotations
+    #Search for correct face
+    firstFace = response.face_annotations[0]
+
+    pan_angle = firstFace.pan_angle #side to side
+    tilt_angle = firstFace.tilt_angle #up and down
+
+    return (pan_angle, tilt_angle)

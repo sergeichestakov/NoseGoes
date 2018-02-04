@@ -15,7 +15,7 @@ cap = cv2.VideoCapture(0)
 #Compare subsequent calculations against the first frame captured
 ret, initFrame = cap.read()
 cv2.imwrite("initialFrame.jpg", initFrame)
-initStats = gc_query.getAnnotations("initialFrame.jpg")[0]
+initPan, initTilt = gc_query.getAnnotations("initialFrame.jpg")
 
 while(True):
     # Capture frame-by-frame
@@ -25,7 +25,7 @@ while(True):
 
     # Display the resulting frame
     cv2.imwrite("videoframe.jpg", frame)
-    #annotations = gc_query.getAnnotations("videoframe.jpg")
+    #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
     #rect = annotations.bounding_poly.vertices
     try:
         rect = tracker.faceDetect(gray)[0]
