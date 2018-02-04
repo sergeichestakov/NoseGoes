@@ -62,8 +62,7 @@ def main():
 
     current_time = time.time()
     camera = cv2.VideoCapture(0)
-    initPan, initTilt = initFrame(camera)
-    modules.speech.main()
+    #modules.speech.main()
     run(camera, browser, current_time)
 
     close(camera, browser)

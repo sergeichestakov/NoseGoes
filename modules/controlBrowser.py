@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
+from selenium.webdriver.common.action_chains import ActionChains
 
 class Browser:
 
@@ -53,11 +54,18 @@ class Browser:
             'down': 500
         }[direction]
 
+    def getScrollKey(self, direction):
+        return {
+            'up': Keys.ARROW_UP,
+            'down': Keys.ARROW_DOWN
+        }[direction]
     #Scrolls up and down the page: direction should be 'up' or 'down'
     def scroll(self, direction):
         scrollValue = self.getScroll(direction)
-        javascript = f"window.scrollBy(0, {str(scrollValue)})"
-        self.browser.execute_script(javascript)
+        scrollKey = self.getScrollKey(direction)
+        ActionChains(self.browser).key_down(scrollKey).perform()
+        #javascript = f"window.scrollBy(0, {str(scrollValue)})"
+        #self.browser.execute_script(javascript)
 
     def close(self):
         self.browser.close()
