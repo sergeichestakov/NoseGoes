@@ -5,7 +5,7 @@ import google.cloud.vision
 
 img_name = "myface.jpg"
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./Nose Goes-a1408150a310.env.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./nosegoes.json"
 
 vision_client = google.cloud.vision.ImageAnnotatorClient()
 
