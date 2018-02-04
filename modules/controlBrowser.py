@@ -13,11 +13,11 @@ class Browser:
 
     def populate(self):
         main_window = self.browser.current_window_handle
-        self.browser.execute_script("window.location.href = '" + self.default_site + "'")
+        self.browser.execute_script(f"window.location.href = '{self.default_site}'")
 
         #Open new tabs
         for tab in Browser.new_tabs:
-            javascript = "window.open('" + tab + "');"
+            javascript = f"window.open('{tab}');"
             self.browser.execute_script(javascript)
             sleep(0.4)
 
@@ -56,12 +56,10 @@ class Browser:
     #Scrolls up and down the page: direction should be 'up' or 'down'
     def scroll(self, direction):
         scrollValue = self.getScroll(direction)
-        javascript = "window.scrollBy(0," + str(scrollValue) + ");"
-
+        javascript = f"window.scrollBy(0, {str(scrollValue)})"
         self.browser.execute_script(javascript)
 
     def close(self):
-        sleep(10)
         self.browser.close()
         self.browser.quit()
 
