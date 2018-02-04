@@ -1,5 +1,17 @@
 import cv2
 from collections import deque
+import time
+
+class Box:
+    def __init__(self, x, y, w, h):
+        self.center = (x,y)
+        self.w = w
+        self.h = h
+        self.topLeft = (x - w/2, y - h/2)
+        self.topRight = (x + w/2, y - h/2)
+        self.bottomLeft = (x - w/2, y + h/2)
+        self.bottomRight = (x + w/2, y + h/2)
+
 
 class ExponentialSmoother:
     def __init__(self, x, a):
@@ -25,6 +37,9 @@ def drawDebugUI(image, x, y, w, h):
     cv2.circle(image, center=(x, y), radius=2, color=(255,0,0))
     cv2.rectangle(image, (x - w / 2, y - h / 2), (h + w / 2, y + h / 2), color=(0,255,0), thickness=2)
 
+def updateThreshold(x, y, w, h):
+    pass
+    
 def updateSmoothers(center, width, height):
     if "x" not in smoothVar:
         smoothVar["x"] = MovingAverageSmoother(3)
