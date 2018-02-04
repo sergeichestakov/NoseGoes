@@ -2,6 +2,8 @@ import cv2
 from collections import deque
 import time
 from opencvTracking import Vertex
+from google_cloud_platform_query import getAnnotations
+import asyncio
 
 RESET_TIME = 1.5
 DOWN_SCALE = 4
@@ -88,7 +90,8 @@ def updateThreshold(image, x, y, w, h):
                 ret = "up"
         else:
             if delta > RESET_TIME:
-                setBox(x, y, w, h)
+                #setBox(x, y, w, h)
+                pass
         cv2.rectangle(image, (thresholdBox.topLeft.x, thresholdBox.topLeft.y), (thresholdBox.bottomRight.x, thresholdBox.bottomRight.y), color=(255,255,0))
     else:
         if delta > RESET_TIME:
@@ -126,6 +129,20 @@ def updateGesture(image, face):
     width = face[2].x - face[0].x
     height = face[2].y - face[0].y
     (x, y, w, h) = updateSmoothers(center, width, height)
+    retDirection = ""
     direction = updateThreshold(image, x, y, w, h)
+    if direction is not "":
+        cv2.imwrite("videocapture.jpg", image)
+        (pan, tilt) = getAnnotations("videocapture.jpg")
+        print(pan)
+        print(tilt)
+        if direction is "left" and pan < -10:
+            retDirection = direction
+        elif direction is "right" and pan > 10:
+            retDirection = direction
+        elif direction is "up" and tilt > 10:
+            retDirection = direction
+        elif direction is "down" and tilt < -10:
+            retDirection = direction
     drawDebugUI(image, x, y, w, h)
-    return direction
+    return retDirection

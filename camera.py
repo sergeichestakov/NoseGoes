@@ -1,9 +1,5 @@
 import argparse
 import datetime
-<<<<<<< HEAD
-
-=======
->>>>>>> fa81bffedc2fbdbc0c2e9d46b685c15cef21a497
 import time
 import cv2
 import numpy as np
