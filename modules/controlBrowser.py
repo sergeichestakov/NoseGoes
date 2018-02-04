@@ -33,6 +33,18 @@ class Browser:
             self.switchTabs('left')
 
     #Switch tabs left and right: direction should be 'left' or 'right'
+    def openTab(self):
+        print("opening a new tab")
+        self.browser.execute_script("window.open('https://google.com')")
+
+    def forward(self):
+        print("going forward")
+        self.browser.execute_script("window.history.forward();")
+    
+    def back(self):
+        print("going back")
+        self.browser.execute_script("window.history.back();")
+
     def switchTabs(self, direction):
         tabs = self.browser.window_handles
         currTab = self.browser.current_window_handle
