@@ -56,27 +56,32 @@ def drawDebugUI(image, x, y, w, h):
 
 def setBox(x, y, w, h):
     global thresholdBox, currentTime
-    thresholdBox = Box(x, y, w / DOWN_SCALE, h / DOWN_SCALE)
+    thresholdBox = Box(x, y, int(w / DOWN_SCALE), int(h / DOWN_SCALE / 1.1))
     currentTime = time.time()
 
 def updateThreshold(image, x, y, w, h):
     global thresholdBox, currentTime
     delta = time.time() - currentTime
+    ret = ""
     if thresholdBox is not None:
         point = Vertex(x,y)
         if not thresholdBox.contains(point):
             if thresholdBox.left(point):
                 currentTime = time.time()
                 print("looking left")
+                ret = "left"
             elif thresholdBox.right(point):
                 currentTime = time.time()
                 print("looking right")
+                ret = "right"
             elif thresholdBox.top(point):
                 currentTime = time.time()
                 print("looking down")
+                ret = "down"
             elif thresholdBox.bottom(point):
                 currentTime = time.time()
                 print("looking up")
+                ret = "up"
         else:
             if delta > RESET_TIME:
                 setBox(x, y, w, h)
@@ -84,6 +89,7 @@ def updateThreshold(image, x, y, w, h):
     else:
         if delta > RESET_TIME:
             setBox(x, y, w, h)
+    return ret
 
 def updateSmoothers(center, width, height):
     if "x" not in smoothVar:
@@ -116,5 +122,6 @@ def updateGesture(image, face):
     width = face[2].x - face[0].x
     height = face[2].y - face[0].y
     (x, y, w, h) = updateSmoothers(center, width, height)
-    updateThreshold(image, x, y, w, h)
+    direction = updateThreshold(image, x, y, w, h)
     drawDebugUI(image, x, y, w, h)
+    return direction
