@@ -59,12 +59,10 @@ class Browser:
 
         self.browser.execute_script(javascript)
 
-
     def close(self):
         sleep(10)
         self.browser.close()
         self.browser.quit()
-
 
 if __name__ == "__main__":
     browser = Browser()
