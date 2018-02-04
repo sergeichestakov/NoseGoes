@@ -12,17 +12,22 @@ class Browser:
         self.populate()
 
     def populate(self):
+        javascript = "window.open('" + Browser.new_tab + "');"
+        main_window = self.browser.current_window_handle
+
+        #Open new tabs
         for tab in range(3):
             sleep(1)
-            self.browser.execute_script('''window.open("https://developer.mozilla.org/en-US/");''')
+            self.browser.execute_script(javascript)
+        #Switch back to original tab
+        self.browser.switch_to_window(main_window)
 
     def scroll(self):
         javascript = "window.scrollBy(0, 500);"
 
-        for down in range(10):
+        for down in range(15):
             sleep(1)
             self.browser.execute_script(javascript)
-            self.browser.execute_script('console.log(window)')
 
 
     def close(self):
@@ -33,6 +38,5 @@ class Browser:
 
 if __name__ == "__main__":
     browser = Browser()
-
     browser.scroll()
     browser.close()
