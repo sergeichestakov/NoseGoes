@@ -131,9 +131,9 @@ def processAsyncGesture(answer):
     future = None
     retGesture = "none"
     if pan < -15:
-        retGesture = "left"
-    elif pan > 15:
         retGesture = "right"
+    elif pan > 15:
+        retGesture = "left"
     elif tilt > 3:
         retGesture = "up"
     elif tilt < -4:
