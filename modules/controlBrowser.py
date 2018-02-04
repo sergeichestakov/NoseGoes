@@ -45,6 +45,9 @@ class Browser:
         print("going back")
         self.browser.execute_script("window.history.back();")
 
+    def openWebsite(self, name):
+        self.browser.execute_script("window.location.href = '" + self.getWebsite(name) + "'")
+
     def switchTabs(self, direction):
         tabs = self.browser.window_handles
         currTab = self.browser.current_window_handle
@@ -66,6 +69,14 @@ class Browser:
             'down': 500
         }[direction]
 
+    def getWebsite(self, name):
+        if name is "facebook":
+            return "https://facebook.com"
+        if name is "reddit":
+            return "https://reddit.com"
+        if name is "twitter":
+            return "https://twitter.com"
+        return "https://google.com/?q=" + name
     def getScrollKey(self, direction):
         return {
             'up': Keys.ARROW_UP,
@@ -86,7 +97,7 @@ class Browser:
 def main():
     browser = Browser()
     browser.run()
-    browser.close()
+    #browser.close()
 
 if __name__ == "__main__":
     main()
