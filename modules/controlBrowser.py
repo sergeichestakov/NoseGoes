@@ -76,7 +76,10 @@ class Browser:
             return "https://reddit.com"
         if name is "twitter":
             return "https://twitter.com"
+        if name is "google":
+            return "https://google.com"
         return "https://google.com/?q=" + name
+
     def getScrollKey(self, direction):
         return {
             'up': Keys.ARROW_UP,
