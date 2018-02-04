@@ -7,7 +7,7 @@ import modules.google_cloud_platform_query as gc_query
 import modules.opencvTracking as tracker
 from modules.gestureEngine import updateGesture
 from modules.controlBrowser import Browser
-#import modules.speech
+import modules.speech
 
 #Constant stream of video with browser actions and API calls based on gestures
 def run(camera, browser, current_time):
@@ -62,12 +62,8 @@ def main():
 
     current_time = time.time()
     camera = cv2.VideoCapture(0)
-<<<<<<< HEAD
     initPan, initTilt = initFrame(camera)
     modules.speech.main()
-=======
-
->>>>>>> f43981a6f9a89334adbd7876f0670fae4c01f5a5
     run(camera, browser, current_time)
 
     close(camera, browser)
