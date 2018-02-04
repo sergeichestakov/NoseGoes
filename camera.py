@@ -6,6 +6,7 @@ import time
 import cv2
 import numpy as np
 import google_cloud_platform_query as gc_query
+import opencvTracking as tracker
 
 current_time = time.time()
 
@@ -18,14 +19,17 @@ while(True):
     current_time = time.time()
     # Our operations on the frame come here
     #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray = frame
+    gray = frame # not really gray here
     # Display the resulting frame
     cv2.imwrite("videoframe.jpg", frame)
-    annotations = gc_query.getCoordinatesOfFace("videoframe.jpg")[0]
-    rect = annotations.bounding_poly.vertices
-    cv2.rectangle(gray, (int(rect[0].x), int(rect[0].y)), (int(rect[2].x), int(rect[2].y)), color=(0,255,0), thickness=2)
-
-    
+    # annotations = gc_query.getAnnotations("videoframe.jpg")[0]
+    # rect = annotations.bounding_poly.vertices
+    try:
+        rect = tracker.faceDetect(gray)[0]
+        print(rect[0].x)
+        cv2.rectangle(gray, (int(rect[0].x), int(rect[0].y)), (int(rect[2].x), int(rect[2].y)), color=(0,255,0), thickness=2)
+    except Exception, e:
+        print("face not in frame")
 
     cv2.imshow('frame', gray)
     print ("fps: " + str(1/delta))
