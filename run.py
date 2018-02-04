@@ -5,21 +5,9 @@ import cv2
 import numpy as np
 import modules.google_cloud_platform_query as gc_query
 import modules.opencvTracking as tracker
-from modules.gestureEngine import updateGesture 
+from modules.gestureEngine import updateGesture
 from modules.controlBrowser import Browser
-# import modules.speech
-
-#Validates the initial frame and returns original pan and tilt positions
-def initFrame(camera):
-    initPan = None
-    #Compare subsequent calculations against the first frame captured
-    #Make sure first frame is valid
-    while not initPan:
-        ret, initFrame = camera.read()
-        cv2.imwrite("./assets/initialFrame.jpg", initFrame)
-        initPan, initTilt = gc_query.getAnnotations("./assets/initialFrame.jpg")
-
-    return (initPan, initTilt)
+#import modules.speech
 
 #Constant stream of video with browser actions and API calls based on gestures
 def run(camera, browser, current_time):
@@ -53,8 +41,8 @@ def run(camera, browser, current_time):
                 prevDirection = direction
 
         except Exception as e:
+            print('ERROR:')
             print(e)
-            print("face not in frame")
 
         cv2.imshow('frame', frame)
         #print ("fps: " + str(1/delta))
@@ -74,8 +62,12 @@ def main():
 
     current_time = time.time()
     camera = cv2.VideoCapture(0)
+<<<<<<< HEAD
     initPan, initTilt = initFrame(camera)
     modules.speech.main()
+=======
+
+>>>>>>> f43981a6f9a89334adbd7876f0670fae4c01f5a5
     run(camera, browser, current_time)
 
     close(camera, browser)
