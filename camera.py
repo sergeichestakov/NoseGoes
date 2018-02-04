@@ -9,44 +9,56 @@ import opencvTracking as tracker
 import gestureEngine
 from controlBrowser import Browser
 
-#open browser
-#browser = Browser()
+#Validates the initial frame and returns original pan and tilt positions
+def initFrame(camera):
+    initPan = None
+    #Compare subsequent calculations against the first frame captured
+    #Make sure first frame is valid
+    while not initPan:
+        ret, initFrame = camera.read()
+        cv2.imwrite("initialFrame.jpg", initFrame)
+        initPan, initTilt = gc_query.getAnnotations("initialFrame.jpg")
 
-current_time = time.time()
+    return (initPan, initTilt)
 
-cap = cv2.VideoCapture(0)
+#Constant stream of video with browser actions and API calls based on gestures
+def run(camera, browser, current_time):
+    while(True):
+        # camerature frame-by-frame
+        ret, frame = camera.read()
+        delta = time.time() - current_time
+        current_time = time.time()
 
-initPan = None
+        # Display the resulting frame
+        cv2.imwrite("videoframe.jpg", frame)
+        #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
+        #rect = annotations.bounding_poly.vertices
+        try:
+            rect = tracker.faceDetect(frame)[0]
+            gestureEngine.updateGesture(frame, rect)
+        except Exception:
+            print("face not in frame")
 
-#Compare subsequent calculations against the first frame captured
-#Make sure first frame is valid
-while not initPan:
-    ret, initFrame = cap.read()
-    cv2.imwrite("initialFrame.jpg", initFrame)
-    initPan, initTilt = gc_query.getAnnotations("initialFrame.jpg")
-    print(initPan)
+        cv2.imshow('frame', frame)
+        print ("fps: " + str(1/delta))
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            return
 
-while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
-    delta = time.time() - current_time
+def close(camera):
+    # When everything done, release the capture
+    camera.release()
+    cv2.destroyAllWindows()
+
+def main():
+    #open browser
+    #browser = Browser()
     current_time = time.time()
+    camera = cv2.VideoCapture(0)
+    initPan, initTilt = initFrame(camera)
 
-    # Display the resulting frame
-    cv2.imwrite("videoframe.jpg", frame)
-    #pan, tilt = gc_query.getAnnotations("videoframe.jpg")
-    #rect = annotations.bounding_poly.vertices
-    try:
-        rect = tracker.faceDetect(frame)[0]
-        gestureEngine.updateGesture(frame, rect)
-    except Exception:
-        print("face not in frame")
+    run(camera, None, current_time)
 
-    cv2.imshow('frame', frame)
-    print ("fps: " + str(1/delta))
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    close(camera)
 
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
+if __name__ == "__main__":
+    main()
