@@ -21,6 +21,11 @@ class MovingAverageSmoother:
 
 smoothVar = {}
 
+def drawDebugUI(image, x, y, w, h):
+    cv2.circle(image, center=(x, y), radius=2, color=(255,0,0))
+    cv2.rectangle(image, (x - w / 2, y - h / 2), (h + w / 2, y + h / 2), color=(0,255,0), thickness=2)
+
+
 def updateGesture(image, face):
     # face format is [topLeft, topRight, bottomRight, bottomLeft]
     # each face is a Vertex with properties x and y
@@ -48,5 +53,4 @@ def updateGesture(image, face):
         smoothH = height
     else:
         smoothH = int(smoothVar["h"].smooth(height))
-    cv2.circle(image, center=(smoothX, smoothY), radius=2, color=(255,0,0))
-    cv2.rectangle(image, (smoothX - smoothW / 2, smoothY - smoothH / 2), (smoothX + smoothW / 2, smoothY + smoothH / 2), color=(0,255,0), thickness=2)
+    drawDebugUI(image, smoothX, smoothY, smoothW, smoothH)
