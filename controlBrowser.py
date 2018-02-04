@@ -36,20 +36,19 @@ class Browser:
         currIndex = tabs.index(currTab)
 
         newIndex = self.getNewIndex(currIndex, direction)
-
         self.browser.switch_to_window(tabs[newIndex])
 
     def getNewIndex(self, currIndex, direction):
-        length = len(self.browser.window_handles)
+        maxIndex = len(self.browser.window_handles) - 1
         if(direction == 'left'):
-            return currIndex - 1 if currIndex > 0 else length - 1
+            return currIndex - 1 if currIndex > 0 else maxIndex
         elif(direction == 'right'):
-            return currIndex + 1 if currIndex < length - 1 else 0
+            return currIndex + 1 if currIndex < maxIndex else 0
 
     def getScroll(self, direction):
         return {
-            'up': -1000,
-            'down': 1000
+            'up': -500,
+            'down': 500
         }[direction]
 
     #Scrolls up and down the page: direction should be 'up' or 'down'
