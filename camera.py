@@ -28,14 +28,8 @@ while(True):
     #annotations = gc_query.getAnnotations("videoframe.jpg")
     #rect = annotations.bounding_poly.vertices
     try:
-<<<<<<< HEAD
-        rect = tracker.faceDetect(frame)[0]
-        print(rect[0].x)
-        cv2.rectangle(frame, (int(rect[0].x), int(rect[0].y)), (int(rect[2].x), int(rect[2].y)), color=(0,255,0), thickness=2)
-=======
         rect = tracker.faceDetect(gray)[0]
         gestureEngine.updateGesture(gray, rect)
->>>>>>> 6fe53e46204cc756e863b05cd64bb99e20f6607c
     except Exception:
         print("face not in frame")
 
