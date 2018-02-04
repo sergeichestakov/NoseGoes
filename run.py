@@ -43,7 +43,12 @@ def processSpeech(browser, stream, client, streaming_config):
                 if "open" in transcript and "tab" in transcript:
                     browser.openTab()
                 elif "go" in transcript:
-                    if "back" in transcript:
+                    if "to" in transcript:
+                        words = transcript.split(' ')
+                        name = (' ').join(words[2:len(words)])
+                        browser.openWebsite(name)
+
+                    elif "back" in transcript:
                         browser.back()
                     elif "forward" in transcript:
                         browser.forward()
