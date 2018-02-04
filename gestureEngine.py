@@ -6,7 +6,7 @@ from google_cloud_platform_query import getAnnotations
 from concurrent.futures import ThreadPoolExecutor
 
 RESET_TIME = 1.5
-DOWN_SCALE = 4
+DOWN_SCALE = 5
 executor = ThreadPoolExecutor(max_workers=1)
 
 class Box:
@@ -128,22 +128,22 @@ def updateSmoothers(center, width, height):
 def processAsyncGesture(answer):
     global future, retGesture
     (pan, tilt) = answer.result()
-    print(pan)
-    print(tilt)
     future = None
-    if pan < -10:
+    retGesture = "none"
+    if pan < -15:
         retGesture = "left"
-    elif pan > 10:
+    elif pan > 15:
         retGesture = "right"
-    elif tilt > 10:
+    elif tilt > 3:
         retGesture = "up"
-    elif tilt < -10:
+    elif tilt < -4:
         retGesture = "down"
 
 def updateGesture(image, face):
     # face format is [topLeft, topRight, bottomRight, bottomLeft]
     # each face is a Vertex with properties x and y
-    global executor, future, retGesture
+    global executor, future, retGesture, currentTime
+    delta = time.time() - currentTime
     center = ((face[0].x + face[2].x) / 2, (face[0].y + face[2].y) / 2)
     width = face[2].x - face[0].x
     height = face[2].y - face[0].y
@@ -157,6 +157,10 @@ def updateGesture(image, face):
             future.add_done_callback(processAsyncGesture)
     if retGesture is not "":
         retDirection = retGesture
+        if retGesture is "none":
+            setBox(x, y, w, h)
         retGesture = ""
+    if direction is "":
+        retDirection = "none"
     drawDebugUI(image, x, y, w, h)
     return retDirection

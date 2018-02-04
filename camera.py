@@ -42,13 +42,14 @@ def run(camera, browser, current_time):
             direction = gestureEngine.updateGesture(frame, rect)
 
             #Determine browser action based on gesture
-            if direction is not prevDirection:
+            if direction is not prevDirection and direction is not "":
                 if direction in horizontal:
                     browser.switchTabs(direction)
                 elif direction in vertical:
                     browser.scroll(direction)
 
-            prevDirection = direction
+            if direction is not "":
+                prevDirection = direction
 
         except Exception as e:
             print(e)

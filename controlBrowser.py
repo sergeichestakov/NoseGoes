@@ -19,7 +19,7 @@ class Browser:
         for tab in Browser.new_tabs:
             javascript = "window.open('" + tab + "');"
             self.browser.execute_script(javascript)
-            sleep(0.2)
+            sleep(0.4)
 
         #Switch back to original tab
         self.browser.switch_to_window(main_window)
