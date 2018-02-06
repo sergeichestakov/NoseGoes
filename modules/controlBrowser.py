@@ -80,7 +80,7 @@ class Browser:
         if name is "google":
             return "https://google.com"
 
-    def search(self, name)
+    def search(self, name):
          self.browser.execute_script("window.location.href = 'https://google.com/?q=" + name + "'")
 
     def getScrollKey(self, direction):
