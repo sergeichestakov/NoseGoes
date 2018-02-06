@@ -22,7 +22,7 @@ def processSpeech(browser, stream, client, streaming_config):
     audio_generator = stream.generator()
     requests = (types.StreamingRecognizeRequest(audio_content=content)
                     for content in audio_generator)
-        
+
     responses = client.streaming_recognize(streaming_config, requests)
     try:
         for response in responses:
@@ -53,7 +53,8 @@ def processSpeech(browser, stream, client, streaming_config):
                         browser.forward()
                 elif "search" in transcript:
                     words = transcript.lstrip().split(' ')
-                    query = (' ').join(words.remove("search"))
+                    words.remove("search")
+                    query = (' ').join(words)
                     browser.search(query)
     except Exception as e:
         print(e)

@@ -40,7 +40,7 @@ class Browser:
     def forward(self):
         print("going forward")
         self.browser.execute_script("window.history.forward();")
-    
+
     def back(self):
         print("going back")
         self.browser.execute_script("window.history.back();")
@@ -81,7 +81,8 @@ class Browser:
             return "https://google.com"
 
     def search(self, name):
-         self.browser.execute_script("window.location.href = 'https://google.com/?q=" + name + "'")
+        print(name)
+        self.browser.execute_script(f"window.location.href = 'https://google.com/search?q={name}'")
 
     def getScrollKey(self, direction):
         return {
