@@ -6,3 +6,4 @@ geckodriver.log
 dist/*
 build/*
 nosyCortana/*
+*nosegoes.json
