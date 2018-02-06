@@ -45,7 +45,7 @@ def processSpeech(browser, stream, client, streaming_config):
                 elif "go" in transcript:
                     if "to" in transcript:
                         words = transcript.lstrip().split(' ')
-                        name = (' ').join(words[2:len(words)])
+                        name = ('').join(words[2:len(words)])
                         browser.openWebsite(name)
                     elif "back" in transcript:
                         browser.back()
