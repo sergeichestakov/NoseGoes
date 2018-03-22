@@ -25,6 +25,7 @@ class Browser:
         #Switch back to original tab
         self.browser.switch_to_window(main_window)
 
+    '''Test functionality if running script as main'''
     def run(self):
         while(True):
             sleep(2)
@@ -32,22 +33,23 @@ class Browser:
             sleep(2)
             self.switchTabs('left')
 
-    #Switch tabs left and right: direction should be 'left' or 'right'
+    '''Voice Commands implemented as javascript executed in the browser'''
     def openTab(self):
-        print("opening a new tab")
         self.browser.execute_script("window.open('https://google.com')")
 
     def forward(self):
-        print("going forward")
         self.browser.execute_script("window.history.forward();")
 
     def back(self):
-        print("going back")
         self.browser.execute_script("window.history.back();")
 
     def openWebsite(self, name):
-        self.browser.execute_script("window.location.href = '" + self.getWebsite(name) + "'")
+        self.browser.execute_script("window.location.href = https://'" + name + ".com/'")
 
+    def search(self, name):
+        self.browser.execute_script(f"window.location.href = 'https://google.com/search?q={name}'")
+
+    '''Facial Gestures implemented as Selenium actions'''
     def switchTabs(self, direction):
         tabs = self.browser.window_handles
         currTab = self.browser.current_window_handle
@@ -63,39 +65,16 @@ class Browser:
         elif(direction == 'right'):
             return currIndex + 1 if currIndex < maxIndex else 0
 
-    def getScroll(self, direction):
-        return {
-            'up': -500,
-            'down': 500
-        }[direction]
-
-    def getWebsite(self, name):
-        return "https://"+name+".com/"
-        if name is "facebook":
-            return "https://facebook.com"
-        if name is "reddit":
-            return "https://reddit.com"
-        if name is "twitter":
-            return "https://twitter.com"
-        if name is "google":
-            return "https://google.com"
-
-    def search(self, name):
-        print(name)
-        self.browser.execute_script(f"window.location.href = 'https://google.com/search?q={name}'")
-
     def getScrollKey(self, direction):
         return {
             'up': Keys.ARROW_UP,
             'down': Keys.ARROW_DOWN
         }[direction]
+
     #Scrolls up and down the page: direction should be 'up' or 'down'
     def scroll(self, direction):
-        scrollValue = self.getScroll(direction)
         scrollKey = self.getScrollKey(direction)
         ActionChains(self.browser).key_down(scrollKey).perform()
-        #javascript = f"window.scrollBy(0, {str(scrollValue)})"
-        #self.browser.execute_script(javascript)
 
     def close(self):
         self.browser.close()
@@ -104,7 +83,6 @@ class Browser:
 def main():
     browser = Browser()
     browser.run()
-    #browser.close()
 
 if __name__ == "__main__":
     main()
