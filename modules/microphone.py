@@ -6,7 +6,8 @@ import os
 
 class MicrophoneStream:
 
-    WIT_AI_KEY = os.environ['WIT_AI_KEY']
+    HOUNDIFY_CLIENT_ID = os.environ['HOUNDIFY_CLIENT_ID']
+    HOUNDIFY_CLIENT_KEY = os.environ['HOUNDIFY_CLIENT_KEY']
     def __init__(self):
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
@@ -17,11 +18,11 @@ class MicrophoneStream:
             audio = self.audio_queue.get()
             if audio is None: break
             try:
-                print(self.recognizer.recognize_wit(audio, key=MicrophoneStream.WIT_AI_KEY))
+                print(self.recognizer.recognize_houndify(audio, client_id=MicrophoneStream.HOUNDIFY_CLIENT_ID, client_key=MicrophoneStream.HOUNDIFY_CLIENT_KEY))
             except sr.UnknownValueError:
                 print('Unable to understand')
             except sr.RequestError as e:
-                print("Could not request results from Wit.ai service; {0}".format(e))
+                print("Could not request results from Houndify service; {0}".format(e))
 
             self.audio_queue.task_done()  # mark the audio processing job as completed in the queue
 
