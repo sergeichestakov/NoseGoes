@@ -42,8 +42,8 @@ venv\Scripts\activate (Windows)
 pip3 install -r requirements.txt
 ```
 
-#### Step 4: Move geckodriver.log to path
-This is the file that Selenium needs to launch Firefox so make sure you have Firefox installed and move geckodriver.log to a directory in your system path.
+#### Step 4: Move assets/geckodriver executable to path
+This is the file that Selenium needs to launch Firefox so make sure you have Firefox installed and move geckodriver to a directory in your system path.
 To print path you can type:
 ```bash
 echo $PATH
