@@ -1,4 +1,5 @@
 # NoseGoes
+![Screenshot](https://github.com/sergeichestakov/sergeichestakov.github.io/blob/dev/src/assets/images/nosegoes.jpg?raw=true)
 
 ## Overview
 NoseGoes is an application that allows a user to control their web browser using facial gestures and voice commands. The goal is to make it easier for disabled and paraplegic people to use the internet.
