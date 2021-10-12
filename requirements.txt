@@ -40,7 +40,7 @@ httplib2==0.10.3
 idna==2.6
 numpy==1.14.2
 oauth2client==3.0.0
-opencv-python==3.4.0.12
+opencv-python==4.2.0.32
 ply==3.8
 proto-google-cloud-datastore-v1==0.90.4
 proto-google-cloud-error-reporting-v1beta1==0.15.3
